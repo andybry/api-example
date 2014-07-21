@@ -1,0 +1,32 @@
+.category-selection-buttons {
+  height: 100%;
+}
+
+%category-selection-buttons__button {
+  display: block;
+  float: left;
+  margin: 0;
+  width: 50%;
+  height: 50%;
+  font-size: 3rem;
+}
+
+.category-selection-buttons__news-button {
+  @extend %category-selection-buttons__button;
+  color: $news-color;
+}
+
+.category-selection-buttons__sport-button {
+  @extend %category-selection-buttons__button;
+  color: $sport-color;
+}
+
+.category-selection-buttons__celebrity-button {
+  @extend %category-selection-buttons__button;
+  color: $celebrity-color;
+}
+
+.category-selection-buttons__tv-button {
+  @extend %category-selection-buttons__button;
+  color: $tv-color;
+}

@@ -1,0 +1,15 @@
+.category-control-panel__filter {
+  display: block;
+  float: right;
+  height: 50px;
+  line-height: 70px;
+}
+
+.category-control-panel__filter-label {
+  font-size: $control-panel-font-size;
+}
+
+.category-control-panel__filter-box {
+  width: 300px;
+  font-size: $control-panel-font-size;
+}

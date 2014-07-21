@@ -1,0 +1,25 @@
+.resulting-articles {
+  padding-left: 10px;
+}
+
+.resulting-article {
+  display: block;
+  margin: 5px;
+  padding: 20px;
+  border: 1px solid black;
+  text-decoration: none;
+  color: black;
+  &:hover {
+    color: red;
+  }
+}
+
+.resulting-article__image {
+  vertical-align: middle;
+}
+
+.resulting-article__title {
+  line-height: 98px;
+  padding-left: 40px;
+  font-size: 2rem;
+}

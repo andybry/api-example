@@ -1,0 +1,37 @@
+.category-control-panel__buttons {
+  display: block;
+  float: left;
+}
+
+%category-control-panel__button {
+  height: 50px;
+  width: 100px;
+  margin: 10px;
+  font-size: $control-panel-font-size;
+  cursor: pointer;
+  &.active {
+    background-color: white;
+    border-color: white;
+    cursor: default;
+  }
+}
+
+.category-control-panel__news-button {
+  @extend %category-control-panel__button;
+  color: $news-color;
+}
+
+.category-control-panel__sport-button {
+  @extend %category-control-panel__button;
+  color: $sport-color;
+}
+
+.category-control-panel__celebrity-button {
+  @extend %category-control-panel__button;
+  color: $celebrity-color;
+}
+
+.category-control-panel__tv-button {
+  @extend %category-control-panel__button;
+  color: $tv-color;
+}
