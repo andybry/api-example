@@ -1,0 +1,17 @@
+{
+  "name": "api-example",
+  "version": "0.0.0",
+  "authors": [
+    "Andy Bryant <ar.bryant@btinternet.com>"
+  ],
+  "description": "Example of my code",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

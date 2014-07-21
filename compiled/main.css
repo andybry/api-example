@@ -1,0 +1,124 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+html, body {
+  height: 100%;
+  font-size: 100%; }
+
+.category-control-panel {
+  height: 70px;
+  padding-right: 20px; }
+
+.category-control-panel__buttons {
+  display: block;
+  float: left; }
+
+.category-control-panel__news-button, .category-control-panel__sport-button, .category-control-panel__celebrity-button, .category-control-panel__tv-button {
+  height: 50px;
+  width: 100px;
+  margin: 10px;
+  font-size: 1rem;
+  cursor: pointer; }
+  .category-control-panel__news-button.active, .category-control-panel__sport-button.active, .category-control-panel__celebrity-button.active, .category-control-panel__tv-button.active {
+    background-color: white;
+    border-color: white;
+    cursor: default; }
+
+.category-control-panel__news-button {
+  color: #921; }
+
+.category-control-panel__sport-button {
+  color: #ed0; }
+
+.category-control-panel__celebrity-button {
+  color: #ed3d7d; }
+
+.category-control-panel__tv-button {
+  color: #262626; }
+
+.category-control-panel__filter {
+  display: block;
+  float: right;
+  height: 50px;
+  line-height: 70px; }
+
+.category-control-panel__filter-label {
+  font-size: 1rem; }
+
+.category-control-panel__filter-box {
+  width: 300px;
+  font-size: 1rem; }
+
+.resulting-articles {
+  padding-left: 10px; }
+
+.resulting-article {
+  display: block;
+  margin: 5px;
+  padding: 20px;
+  border: 1px solid black;
+  text-decoration: none;
+  color: black; }
+  .resulting-article:hover {
+    color: red; }
+
+.resulting-article__image {
+  vertical-align: middle; }
+
+.resulting-article__title {
+  line-height: 98px;
+  padding-left: 40px;
+  font-size: 2rem; }
+
+.category-selection-buttons {
+  height: 100%; }
+
+.category-selection-buttons__news-button, .category-selection-buttons__sport-button, .category-selection-buttons__celebrity-button, .category-selection-buttons__tv-button {
+  display: block;
+  float: left;
+  margin: 0;
+  width: 50%;
+  height: 50%;
+  font-size: 3rem; }
+
+.category-selection-buttons__news-button {
+  color: #921; }
+
+.category-selection-buttons__sport-button {
+  color: #ed0; }
+
+.category-selection-buttons__celebrity-button {
+  color: #ed3d7d; }
+
+.category-selection-buttons__tv-button {
+  color: #262626; }
