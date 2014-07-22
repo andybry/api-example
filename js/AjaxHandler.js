@@ -11,6 +11,7 @@ var AjaxHandler = Base.extend(IAjaxHandler, {
    * Sets the event name and default eventHub.
    *
    * @private
+   * @return AjaxHandler
    */
   _init: function(event) {
      this._eventHub = window.eventHub;
