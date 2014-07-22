@@ -13,6 +13,8 @@ gulp.task('js', function() {
     'bower_components/underscore/underscore.js',
     'bower_components/jquery/dist/jquery.js',
     'js/Base.js',
+    'js/eventHub.js',
+    'js/IAjaxHandler.js',
     'js/**/*.js'
   ])
     .pipe(concat('./main.js'))

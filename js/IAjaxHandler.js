@@ -10,6 +10,7 @@ var IAjaxHandler = Base.extend({
    * The data parameter is the response from jQuery.
    * Typically it would be an object converted from JSON.
    *
+   * @abstract
    * @param {object} data
    */
   handleAjaxResponse: function(data) {

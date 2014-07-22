@@ -18,6 +18,8 @@ module.exports = function(config) {
       'bower_components/underscore/underscore.js',
       'bower_components/jquery/dist/jquery.js',
       'js/Base.js',
+      'js/IAjaxHandler.js',
+      'js/eventHub.js',
       'js/**/*.js',
       'test/**/*.js'
     ],
