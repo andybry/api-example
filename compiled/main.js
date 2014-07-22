@@ -10595,6 +10595,59 @@ var Base = {
 
 };
 /**
+ *
+ * This object decouples the source of a piece of data
+ * from its processor.
+ *
+ * @namespace
+ */
+var eventHub = {
+
+  /**
+   * Registers a handler to respond to events.
+   *
+   * @param {string} event
+   * @param {IEventHandler} eventHandler
+   */
+  register: function(event, eventHandler) {
+    jQuery(document).on(event, function(event, data) {
+      eventHandler.handleEvent(data);
+    });
+  },
+
+  /**
+   * Broadcasts an event to all registered event handlers, passing
+   * on any data object that is the second argument.
+   *
+   * @param {string} event
+   * @param {object} data
+   */
+  fire: function(event, data) {
+    jQuery(document).trigger(event, data);
+  }
+
+};
+/**
+ * Interface for Ajax response handlers.
+ *
+ * @interface
+ */
+var IAjaxHandler = Base.extend({
+
+  /**
+   * Handles the response from an Ajax request.
+   * The data parameter is the response from jQuery.
+   * Typically it would be an object converted from JSON.
+   *
+   * @abstract
+   * @param {object} data
+   */
+  handleAjaxResponse: function(data) {
+    throw 'IAjaxHandler is abstract and its methods must be implemented';
+  }
+
+});
+/**
  * Handles Ajax Requests and passes the results on
  * to a handler
  *
@@ -10627,21 +10680,292 @@ var Ajax = Base.extend({
 
 });
 /**
- * Interface for Ajax response handlers.
+ * Delegates handling the response to any events
+ * registered with a given name.
  *
- * @interface
+ * @class
+ * @implements IAjaxHandler
  */
-var IAjaxHandler = Base.extend({
+var AjaxHandler = Base.extend(IAjaxHandler, {
 
   /**
-   * Handles the response from an Ajax request.
-   * The data parameter is the response from jQuery.
-   * Typically it would be an object converted from JSON.
+   * Sets the event name and default eventHub.
+   *
+   * @private
+   * @return AjaxHandler
+   */
+  _init: function(event) {
+     this._eventHub = window.eventHub;
+     this._event = event;
+     return this;
+  },
+
+  /**
+   * Allows the eventHub to be overridden.
+   *
+   * @param {eventHub} eventHub
+   */
+  setEventHub: function(eventHub) {
+    this._eventHub = eventHub;
+  },
+
+  /**
+   * Delegate the handling of the response to any
+   * registered events.
    *
    * @param {object} data
    */
   handleAjaxResponse: function(data) {
-    throw 'IAjaxHandler is abstract and its methods must be implemented';
+    this._eventHub.fire(this._event, data);
+  }
+
+});
+/**
+ * Data class representing an article.
+ *
+ * @class
+ */
+var Article = Base.extend({
+
+  /**
+   * sets default data
+   *
+   * @returns {Article}
+   * @private
+   */
+  _init: function() {
+    this._title = '';
+    this._url = '';
+    this._image = ArticleImage.create();
+    return this;
+  },
+
+  /**
+   * @returns {string}
+   */
+  getTitle: function() {
+    return this._title;
+  },
+
+  /**
+   * @param {string} title
+   */
+  setTitle: function(title) {
+    this._title = title;
+  },
+
+  /**
+   * @returns {string}
+   */
+  getUrl: function() {
+    return this._url;
+  },
+
+  /**
+   * @param {string} url
+   */
+  setUrl: function(url) {
+    this._url = url;
+  },
+
+  /**
+   * @returns {ArticleImage}
+   */
+  getImage: function() {
+    return this._image;
+  },
+
+  /**
+   * @param {ArticleImage} image
+   */
+  setImage: function(image) {
+    this._image = image;
+  }
+
+});
+/**
+ * Constructs an article object
+ * @type {*}
+ */
+var ArticleBuilder = Base.extend({
+
+  /**
+   * Set default article image builder
+   *
+   * @param articleMap
+   * @returns {ArticleBuilder}
+   * @private
+   */
+  _init: function(articleMap) {
+    this._articleImageBuilder = ArticleImageBuilder.create();
+    return this;
+  },
+
+  /**
+   * Override the articleImageBuilder
+   *
+   * @param {ArticleImageBuilder} articleImageBuilder
+   */
+  setArticleImageBuilder: function(articleImageBuilder) {
+    this._articleImageBuilder = articleImageBuilder;
+  },
+
+  /**
+   * Representation of the JSON API response
+   * articleMap object
+   *
+   * @typedef {object} ArticleMap
+   * @property {string} title
+   * @property {string} url
+   * @property {ImageMap} imageMap
+   */
+
+  /**
+   * @param {ArticleMap} articleMap
+   */
+  build: function(articleMap) {
+    var article = Article.create();
+    article.setTitle(articleMap.title);
+    article.setUrl(articleMap.url);
+    var articleImage = this._articleImageBuilder.build(articleMap.imageMap);
+    article.setImage(articleImage);
+    return article;
+  }
+
+});
+/**
+ * Data class representing an image object associated
+ * within an article.
+ *
+ * @class
+ */
+var ArticleImage = Base.extend({
+
+  /**
+   * sets default data
+   *
+   * @private
+   * @return {ArticleImage}
+   */
+  _init: function() {
+    this._imageUrl = '';
+    this._altText = '';
+    return this;
+  },
+
+  /**
+   * @param {string} url
+   */
+  setImageUrl: function(url) {
+    this._imageUrl = url;
+  },
+
+  /**
+   * @returns {string}
+   */
+  getImageUrl: function() {
+    return this._imageUrl;
+  },
+
+  /**
+   * @param {string} text
+   */
+  setAltText: function(text) {
+    this._altText = text;
+  },
+
+  /**
+   * @returns {string}
+   */
+  getAltText: function() {
+    return this._altText;
+  }
+
+});
+/**
+ * Constructs an ArticleImage from the imageMap object
+ * that is contained within the API response.
+ *
+ * @class
+ */
+var ArticleImageBuilder = Base.extend({
+
+  /**
+   * @typedef {object} ImageMap
+   * @property {string} imageUrl
+   * @property {string} alttext
+   */
+
+  /**
+   * @param {ImageMap} imageMap
+   * @return {ArticleImage}
+   */
+  build: function(imageMap) {
+    var articleImage = ArticleImage.create();
+    articleImage.setImageUrl(imageMap.imageUrl);
+    articleImage.setAltText(imageMap.alttext);
+    return articleImage;
+  }
+
+});
+/**
+ * Constructs an array of Articles from the JSON
+ * response object
+ *
+ * @class
+ */
+var ArticleListBuilder = Base.extend({
+
+  /**
+   * Set the default articleBuilder
+   *
+   * @returns {ArticleListBuilder}
+   * @private
+   */
+  _init: function() {
+    this._articleBuilder = ArticleBuilder.create();
+    return this;
+  },
+
+  /**
+   * Override the articleBuilder
+   * @param {ArticleBuilder} articleBuilder
+   */
+  setArticleBuilder: function(articleBuilder) {
+    this._articleBuilder = articleBuilder;
+  },
+
+  /**
+   * @typedef {object} ResponseObject
+   * @property {Array.<ArticleMap>} articleMaps
+   */
+
+  /**
+   * Build an array of article Objects
+   * @param {ResponseObject} responseObject
+   * @returns {Array.<Article>}
+   *
+   */
+  build: function(responseObject) {
+    var articleBuilder = this._articleBuilder;
+    return responseObject.articleMaps.map(function(articleMap) {
+      return articleBuilder.build(articleMap);
+    });
+  }
+
+});
+/**
+ *
+ * @interface
+ */
+var IEventHandler = Base.extend({
+
+  /**
+   * @abstract
+   * @param {object} data
+   */
+  handleEvent: function(data) {
+    throw 'IEventHandler is abstract and all its methods should be implemented';
   }
 
 });
