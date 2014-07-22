@@ -17,6 +17,7 @@ module.exports = function(config) {
     files: [
       'bower_components/underscore/underscore.js',
       'bower_components/jquery/dist/jquery.js',
+      'js/Base.js',
       'js/**/*.js',
       'test/**/*.js'
     ],

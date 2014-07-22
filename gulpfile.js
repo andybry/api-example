@@ -11,7 +11,8 @@ gulp.task('sass', function () {
 gulp.task('js', function() {
   gulp.src([
     'bower_components/underscore/underscore.js',
-    'bower_components/jquery/dist/jquery..js',
+    'bower_components/jquery/dist/jquery.js',
+    'js/Base.js',
     'js/**/*.js'
   ])
     .pipe(concat('./main.js'))

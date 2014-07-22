@@ -1,5 +1,4 @@
 describe('Base', function() {
-  'use strict';
 
   it('creates a class from a prototype with a parametrised factory method', function() {
     var MyNewClass = Base.extend({

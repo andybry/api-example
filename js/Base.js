@@ -1,5 +1,3 @@
-//= require bower_components/underscore/underscore
-
 /**
  * Creates classes that have a create
  * factory method instead of a constructor.
