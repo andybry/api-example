@@ -11105,7 +11105,7 @@ var PluginCreator = Base.extend({
 
 });
 /**
- * Fires categoryButton events when a category button
+ * Fires categoryButtonClick events when a category button
  * is clicked. These events contain one piece of data:
  * the category that was clicked.
  *
@@ -11127,7 +11127,7 @@ plugins.CategoryButtons = Base.extend(AbstractPlugin, {
     $buttons.on('click', function() {
       var $button = $(this);
       var category = $button.data('category');
-      eventHub.fire('categoryButton', category);
+      eventHub.fire('categoryButtonClick', category);
     });
   }
 

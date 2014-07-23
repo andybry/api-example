@@ -9,7 +9,7 @@ describe('CategoryButtons', function() {
     spyOn(eventHub, 'fire');
     $('#sandbox').CategoryButtons();
     $('#sandbox .news').click();
-    expect(eventHub.fire).toHaveBeenCalledWith('categoryButton', 'news');
+    expect(eventHub.fire).toHaveBeenCalledWith('categoryButtonClick', 'news');
     $('#sandbox').remove();
   });
 
