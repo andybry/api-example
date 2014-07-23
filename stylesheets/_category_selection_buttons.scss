@@ -1,5 +1,8 @@
 .category-selection-buttons {
   height: 100%;
+  &.is-hidden {
+    display: none;
+  }
 }
 
 %category-selection-buttons__button {

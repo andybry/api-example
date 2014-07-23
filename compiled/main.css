@@ -104,6 +104,8 @@ html, body {
 
 .category-selection-buttons {
   height: 100%; }
+  .category-selection-buttons.is-hidden {
+    display: none; }
 
 .category-selection-buttons__news-button, .category-selection-buttons__sport-button, .category-selection-buttons__celebrity-button, .category-selection-buttons__tv-button {
   display: block;
