@@ -38,6 +38,8 @@ html, body {
 .category-control-panel {
   height: 70px;
   padding-right: 20px; }
+  .category-control-panel.is-hidden {
+    display: none; }
 
 .category-control-panel__buttons {
   display: block;
