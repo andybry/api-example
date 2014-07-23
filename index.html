@@ -7,11 +7,11 @@
 </head>
 <body>
   <div class="category-control-panel is-hidden">
-    <div class="category-control-panel__buttons">
-      <button class="category-control-panel__news-button active">News</button>
-      <button class="category-control-panel__sport-button">Sport</button>
-      <button class="category-control-panel__celebrity-button">Celebrity</button>
-      <button class="category-control-panel__tv-button">TV</button>
+    <div class="category-control-panel__buttons" data-plugin="CategoryButtons">
+      <button class="category-control-panel__news-button active" data-category="news">News</button>
+      <button class="category-control-panel__sport-button" data-category="sport">Sport</button>
+      <button class="category-control-panel__celebrity-button" data-category="celebrity">Celebrity</button>
+      <button class="category-control-panel__tv-button" data-category="tv">TV</button>
     </div>
     <div class="category-control-panel__filter">
       <label class="category-control-panel__filter-label">Filter: </label>
@@ -42,11 +42,11 @@
     </a>
 -->
   </div>
-  <div class="category-selection-buttons">
-    <button class="category-selection-buttons__news-button">News</button>
-    <button class="category-selection-buttons__sport-button">Sport</button>
-    <button class="category-selection-buttons__celebrity-button">Celebrity</button>
-    <button class="category-selection-buttons__tv-button">TV</button>
+  <div class="category-selection-buttons" data-plugin="CategoryButtons">
+    <button class="category-selection-buttons__news-button" data-category="news">News</button>
+    <button class="category-selection-buttons__sport-button" data-category="sport">Sport</button>
+    <button class="category-selection-buttons__celebrity-button" data-category="celebrity">Celebrity</button>
+    <button class="category-selection-buttons__tv-button" data-category="tv">TV</button>
   </div>
   <script src="compiled/main.js"></script>
 </body>
