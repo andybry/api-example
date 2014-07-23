@@ -24,7 +24,7 @@ var PluginCreator = Base.extend({
         var nameForDataAttr = 'plugin_' + name;
         var isPluginInitialised =  $node.data(nameForDataAttr);
         if (!isPluginInitialised) {
-          $node.data(nameForDataAttr, pluginClass.create(this));
+          $node.data(nameForDataAttr, pluginClass.create($node));
         }
       });
     };
