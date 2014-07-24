@@ -11113,6 +11113,7 @@ var PluginCreator = Base.extend({
  * whose value is the name of the category being clicked.
  *
  * @class
+ * @augments AbstractPlugin
  */
 plugins.CategoryButtons = Base.extend(AbstractPlugin, {
 
@@ -11129,6 +11130,31 @@ plugins.CategoryButtons = Base.extend(AbstractPlugin, {
       var category = $button.data('category');
       eventHub.fire('categoryButtonClick', category);
     });
+  }
+
+});
+/**
+ *
+ * @class
+ * @augments AbstractPlugin
+ * @implements  IEventHandler
+ */
+plugins.HideOnCategoryButtonClick = Base.extend(AbstractPlugin, {
+
+  /**
+   * register the event handler
+   *
+   * @private
+   */
+  _setup: function() {
+    eventHub.register('categoryButtonClick', this);
+  },
+
+  /**
+   * @param {string} type
+   */
+  handleEvent: function(type) {
+    this._$node.addClass('is-hidden');
   }
 
 });
@@ -11153,6 +11179,8 @@ plugins.CategoryButtons = Base.extend(AbstractPlugin, {
  * </div>
  *
  * @class
+ * @augments AbstractPlugin
+ *
  */
 plugins.PluginRunner = Base.extend(AbstractPlugin, {
 
@@ -11192,12 +11220,26 @@ $(document).ready(function() {
   $('html').PluginRunner();
 });
 
+/**
+ *
+ * @class
+ * @augments AbstractPlugin
+ * @implements  IEventHandler
+ */
 plugins.ShowOnCategoryButtonClick = Base.extend(AbstractPlugin, {
 
+  /**
+   * register the event handler
+   *
+   * @private
+   */
   _setup: function() {
     eventHub.register('categoryButtonClick', this);
   },
 
+  /**
+   * @param {string} type
+   */
   handleEvent: function(type) {
     this._$node.removeClass('is-hidden');
   }
