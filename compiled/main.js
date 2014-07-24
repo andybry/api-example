@@ -11120,21 +11120,6 @@ var typeToHrefMap = {
   tv: 'http://api.mirror.co.uk/tv/81894'
 };
 /**
- *
- * @param {Article} article
- */
-templates.articleListing = function(article) {
-  var url = article.getUrl();
-  var title = article.getTitle();
-  var image = article.getImage();
-  var imageSrc = image.getImageUrl();
-
-  return '<a class="resulting-article" href="' + url + '">' +
-    '<img class="resulting-article__image" src="' + imageSrc + '" alt="">' +
-    '<span class="resulting-article__title">' + title + '</span>' +
-  '</a>';
-};
-/**
  * When the ajax response is received, this plugin
  * builds an articleList out of the response and
  * raises ajaxResponseParsed event.
@@ -11190,6 +11175,31 @@ plugins.CategoryButtons = Base.extend(AbstractPlugin, {
       var category = $button.data('category');
       eventHub.fire('categoryButtonClick', category);
     });
+  }
+
+});
+/**
+ *
+ * @class
+ * @augments AbstractPlugin
+ * @implements  IEventHandler
+ */
+plugins.EmptyOnCategoryButtonClick = Base.extend(AbstractPlugin, {
+
+  /**
+   * register the event handler
+   *
+   * @private
+   */
+  _setup: function() {
+    eventHub.register('categoryButtonClick', this);
+  },
+
+  /**
+   * @param {string} type
+   */
+  handleEvent: function(type) {
+    this._$node.val('');
   }
 
 });
@@ -11419,3 +11429,18 @@ plugins.ShowOnCategoryButtonClick = Base.extend(AbstractPlugin, {
   }
 
 });
+/**
+ *
+ * @param {Article} article
+ */
+templates.articleListing = function(article) {
+  var url = article.getUrl();
+  var title = article.getTitle();
+  var image = article.getImage();
+  var imageSrc = image.getImageUrl();
+
+  return '<a class="resulting-article" href="' + url + '">' +
+    '<img class="resulting-article__image" src="' + imageSrc + '" alt="">' +
+    '<span class="resulting-article__title">' + title + '</span>' +
+  '</a>';
+};
