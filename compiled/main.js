@@ -11191,3 +11191,15 @@ plugins.PluginRunner = Base.extend(AbstractPlugin, {
 $(document).ready(function() {
   $('html').PluginRunner();
 });
+
+plugins.ShowOnCategoryButtonClick = Base.extend(AbstractPlugin, {
+
+  _setup: function() {
+    eventHub.register('categoryButtonClick', this);
+  },
+
+  handleEvent: function(type) {
+    this._$node.removeClass('is-hidden');
+  }
+
+});
