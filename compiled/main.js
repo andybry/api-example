@@ -11105,6 +11105,27 @@ var PluginCreator = Base.extend({
 
 });
 /**
+ * A namespace for template functions.
+ *
+ * @namespace
+ */
+var templates = {};
+/**
+ *
+ * @param {Article} article
+ */
+templates.articleListing = function(article) {
+  var url = article.getUrl();
+  var title = article.getTitle();
+  var image = article.getImage();
+  var imageSrc = image.getImageUrl();
+
+  return '<a class="resulting-article" href="' + url + '">' +
+    '<img class="resulting-article__image" src="' + imageSrc + '" alt="">' +
+    '<span class="resulting-article__title">' + title + '</span>' +
+  '</a>';
+};
+/**
  * Fires categoryButtonClick events when a category button
  * is clicked. These events contain one piece of data:
  * the category that was clicked.
@@ -11221,6 +11242,10 @@ $(document).ready(function() {
 });
 
 /**
+ * When the categoryButtonClick event occurs it removes
+ * all active classes from the node's buttons and then
+ * adds the active class to the buttons whose data-category
+ * attribute matches the type in the click event.
  *
  * @class
  * @augments AbstractPlugin
