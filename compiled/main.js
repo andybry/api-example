@@ -11104,6 +11104,35 @@ var PluginCreator = Base.extend({
   }
 
 });
+/*
+ * handle the ajax response coming back
+ * by parsing
+ *
+ */
+var hrec = {
+  handleEvent: function(response) {
+    var articleListBuilder = ArticleListBuilder.create();
+    var articleList = articleListBuilder.build(response);
+    eventHub.fire('ajaxResponseParsed', {articleList: articleList});
+  }
+};
+eventHub.register('ajaxResponseReceived', hrec);
+
+/*
+ * handle the click with a piece of ajax
+ */
+var hclick = {
+
+  handleEvent: function(type) {
+    var ajaxHandler = AjaxHandler.create('ajaxResponseReceived');
+    var ajax = Ajax.create(ajaxHandler);
+    var ajaxUrl = typeToHrefMap[type];
+    ajax.request(ajaxUrl);
+  }
+
+};
+eventHub.register('categoryButtonClick', hclick);
+
 /**
  * A namespace for template functions.
  *
@@ -11111,19 +11140,13 @@ var PluginCreator = Base.extend({
  */
 var templates = {};
 /**
- *
- * @param {Article} article
+ * Data map giving the category type to href
  */
-templates.articleListing = function(article) {
-  var url = article.getUrl();
-  var title = article.getTitle();
-  var image = article.getImage();
-  var imageSrc = image.getImageUrl();
-
-  return '<a class="resulting-article" href="' + url + '">' +
-    '<img class="resulting-article__image" src="' + imageSrc + '" alt="">' +
-    '<span class="resulting-article__title">' + title + '</span>' +
-  '</a>';
+var typeToHrefMap = {
+  news: 'http://api.mirror.co.uk/news/81894',
+  sport: 'http://api.mirror.co.uk/sport/81894',
+  celebrity: 'http://api.mirror.co.uk/3am/81894',
+  tv: 'http://api.mirror.co.uk/tv/81894'
 };
 /**
  * Fires categoryButtonClick events when a category button
@@ -11242,6 +11265,48 @@ $(document).ready(function() {
 });
 
 /**
+ * Populates a node once the ajax response
+ * has been parsed.
+ *
+ * @class
+ * @augments AbstractPlugin
+ * @implements  IEventHandler
+ */
+plugins.PopulateContentOnAjaxResponseParsed = Base.extend(AbstractPlugin, {
+
+  /**
+   * register the event handler
+   *
+   * @private
+   */
+  _setup: function() {
+    eventHub.register('ajaxResponseParsed', this);
+  },
+
+  /**
+   * @typedef {object} ArticleListData
+   * @property {Array.<Article>} articleList
+   */
+
+  /**
+   * Renders each article and populates the
+   * current node with the content.
+   *
+   * @param {ArticleListData} articleListData
+   */
+  handleEvent: function(articleListData) {
+    var articleList = articleListData.articleList;
+    var $node = this._$node;
+    $node.empty();
+    var self = this;
+    articleList.map(function(article) {
+      var renderedArticle = templates.articleListing(article);
+      $node.append(renderedArticle);
+    });
+  }
+
+});
+/**
  * When the categoryButtonClick event occurs it removes
  * all active classes from the node's buttons and then
  * adds the active class to the buttons whose data-category
@@ -11299,3 +11364,18 @@ plugins.ShowOnCategoryButtonClick = Base.extend(AbstractPlugin, {
   }
 
 });
+/**
+ *
+ * @param {Article} article
+ */
+templates.articleListing = function(article) {
+  var url = article.getUrl();
+  var title = article.getTitle();
+  var image = article.getImage();
+  var imageSrc = image.getImageUrl();
+
+  return '<a class="resulting-article" href="' + url + '">' +
+    '<img class="resulting-article__image" src="' + imageSrc + '" alt="">' +
+    '<span class="resulting-article__title">' + title + '</span>' +
+  '</a>';
+};
