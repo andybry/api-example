@@ -11104,21 +11104,6 @@ var PluginCreator = Base.extend({
   }
 
 });
-/*
- * handle the click with a piece of ajax
- */
-var hclick = {
-
-  handleEvent: function(type) {
-    var ajaxHandler = AjaxHandler.create('ajaxResponseReceived');
-    var ajax = Ajax.create(ajaxHandler);
-    var ajaxUrl = typeToHrefMap[type];
-    ajax.request(ajaxUrl);
-  }
-
-};
-eventHub.register('categoryButtonClick', hclick);
-
 /**
  * A namespace for template functions.
  *
@@ -11133,6 +11118,21 @@ var typeToHrefMap = {
   sport: 'http://api.mirror.co.uk/sport/81894',
   celebrity: 'http://api.mirror.co.uk/3am/81894',
   tv: 'http://api.mirror.co.uk/tv/81894'
+};
+/**
+ *
+ * @param {Article} article
+ */
+templates.articleListing = function(article) {
+  var url = article.getUrl();
+  var title = article.getTitle();
+  var image = article.getImage();
+  var imageSrc = image.getImageUrl();
+
+  return '<a class="resulting-article" href="' + url + '">' +
+    '<img class="resulting-article__image" src="' + imageSrc + '" alt="">' +
+    '<span class="resulting-article__title">' + title + '</span>' +
+  '</a>';
 };
 /**
  * When the ajax response is received, this plugin
@@ -11323,6 +11323,34 @@ plugins.PopulateContentOnAjaxResponseParsed = Base.extend(AbstractPlugin, {
 
 });
 /**
+ *
+ * @class
+ * @augments AbstractPlugin
+ * @implements  IEventHandler
+ */
+plugins.SendAjaxRequestOnCategoryButtonClick = Base.extend(AbstractPlugin, {
+
+  /**
+   * register the event handler
+   *
+   * @private
+   */
+  _setup: function() {
+    eventHub.register('categoryButtonClick', this);
+    var ajaxHandler = AjaxHandler.create('ajaxResponseReceived');
+    this._ajax = Ajax.create(ajaxHandler);
+  },
+
+  /**
+   * @param {string} type
+   */
+  handleEvent: function(type) {
+    var ajaxUrl = typeToHrefMap[type];
+    this._ajax.request(ajaxUrl);
+  }
+
+});
+/**
  * When the categoryButtonClick event occurs it removes
  * all active classes from the node's buttons and then
  * adds the active class to the buttons whose data-category
@@ -11380,18 +11408,3 @@ plugins.ShowOnCategoryButtonClick = Base.extend(AbstractPlugin, {
   }
 
 });
-/**
- *
- * @param {Article} article
- */
-templates.articleListing = function(article) {
-  var url = article.getUrl();
-  var title = article.getTitle();
-  var image = article.getImage();
-  var imageSrc = image.getImageUrl();
-
-  return '<a class="resulting-article" href="' + url + '">' +
-    '<img class="resulting-article__image" src="' + imageSrc + '" alt="">' +
-    '<span class="resulting-article__title">' + title + '</span>' +
-  '</a>';
-};
