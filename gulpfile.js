@@ -1,17 +1,21 @@
 var gulp = require('gulp');
 var concat = require ('gulp-concat');
 var sass = require ('gulp-sass');
+var bower = require('gulp-bower');
+var runSequence = require('run-sequence');
+
+gulp.task('bower', function() {
+  return bower();
+});
 
 gulp.task('sass', function () {
-  gulp.src('stylesheets/main.scss')
+  return gulp.src('stylesheets/main.scss')
     .pipe(sass())
     .pipe(gulp.dest('compiled'));
 });
 
 gulp.task('js', function() {
-  gulp.src([
-    'bower_components/underscore/underscore.js',
-    'bower_components/jquery/dist/jquery.js',
+  return gulp.src([
     'js/Base.js',
     'js/eventHub.js',
     'js/IAjaxHandler.js',
@@ -26,4 +30,6 @@ gulp.task('watch', function() {
   gulp.watch(['js/**/*.js'], ['js']);
 });
 
-gulp.task('default', ['sass'  , 'js']);
+gulp.task('default', function(callback) {
+  runSequence('bower', ['sass', 'js'], callback);
+});
