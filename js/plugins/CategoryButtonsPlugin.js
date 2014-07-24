@@ -7,6 +7,7 @@
  * whose value is the name of the category being clicked.
  *
  * @class
+ * @augments AbstractPlugin
  */
 plugins.CategoryButtons = Base.extend(AbstractPlugin, {
 

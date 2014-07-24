@@ -19,6 +19,8 @@
  * </div>
  *
  * @class
+ * @augments AbstractPlugin
+ *
  */
 plugins.PluginRunner = Base.extend(AbstractPlugin, {
 
