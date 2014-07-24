@@ -11105,20 +11105,6 @@ var PluginCreator = Base.extend({
 
 });
 /*
- * handle the ajax response coming back
- * by parsing
- *
- */
-var hrec = {
-  handleEvent: function(response) {
-    var articleListBuilder = ArticleListBuilder.create();
-    var articleList = articleListBuilder.build(response);
-    eventHub.fire('ajaxResponseParsed', {articleList: articleList});
-  }
-};
-eventHub.register('ajaxResponseReceived', hrec);
-
-/*
  * handle the click with a piece of ajax
  */
 var hclick = {
@@ -11148,6 +11134,36 @@ var typeToHrefMap = {
   celebrity: 'http://api.mirror.co.uk/3am/81894',
   tv: 'http://api.mirror.co.uk/tv/81894'
 };
+/**
+ * When the ajax response is received, this plugin
+ * builds an articleList out of the response and
+ * raises ajaxResponseParsed event.
+ *
+ * @class
+ * @augments AbstractPlugin
+ * @implements  IEventHandler
+ */
+plugins.BuildArticlesOnAjaxResponseReceived = Base.extend(AbstractPlugin, {
+
+  /**
+   * register the event handler
+   *
+   * @private
+   */
+  _setup: function() {
+    eventHub.register('ajaxResponseReceived', this);
+    this._articleListBuilder = ArticleListBuilder.create();
+  },
+
+  /**
+   * @param {ResponseObject} responseObject
+   */
+  handleEvent: function(responseObject) {
+    var articleList = this._articleListBuilder.build(responseObject);
+    eventHub.fire('ajaxResponseParsed', {articleList: articleList});
+  }
+
+});
 /**
  * Fires categoryButtonClick events when a category button
  * is clicked. These events contain one piece of data:
