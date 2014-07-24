@@ -11226,6 +11226,35 @@ $(document).ready(function() {
  * @augments AbstractPlugin
  * @implements  IEventHandler
  */
+plugins.SetActiveButtonOnCategoryButtonClick = Base.extend(AbstractPlugin, {
+
+  /**
+   * register the event handler
+   *
+   * @private
+   */
+  _setup: function() {
+    eventHub.register('categoryButtonClick', this);
+  },
+
+  /**
+   * @param {string} type
+   */
+  handleEvent: function(type) {
+    var categorySelector = '[data-category=' + type + ']';
+    var $activeButton = this._$node.find(categorySelector);
+    var $allButtons = this._$node.find('button');
+    $allButtons.removeClass('active');
+    $activeButton.addClass('active');
+  }
+
+});
+/**
+ *
+ * @class
+ * @augments AbstractPlugin
+ * @implements  IEventHandler
+ */
 plugins.ShowOnCategoryButtonClick = Base.extend(AbstractPlugin, {
 
   /**
