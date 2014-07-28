@@ -7,7 +7,7 @@ An example of my JavaScript code.
 ## About
 
 This is a Web application built in JavaScript. It connects to a JSON API owned by the Daily Mirror
-that I archited and constructed when I was working for Trinity Mirror.
+that I architected and constructed when I was working for Trinity Mirror.
 
 The application allows a user to quickly look through the latest articles in various categories on
 the Daily Mirror site.
